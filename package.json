@@ -1,7 +1,7 @@
 {
   "name": "xterm-addon-web-links",
-  "version": "0.1.0-beta1",
-  "main": "webLinksAddon.ts",
+  "version": "0.1.0-beta2",
+  "main": "lib/webLinksAddon.js",
   "scripts": {
     "watch": "tsc -w"
   },
