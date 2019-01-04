@@ -9,7 +9,6 @@
     "rootDir": "src",
     "outDir": "lib",
     "sourceMap": true,
-    "removeComments": true,
-    "declaration": true
+    "removeComments": true
   }
 }
