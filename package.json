@@ -1,7 +1,11 @@
 {
   "name": "xterm-addon-web-links",
   "version": "0.1.0-beta3",
-  "main": "lib/webLinksAddon.js",
+  "author": {
+    "name": "The xterm.js authors",
+    "url": "https://xtermjs.org/"
+  },
+  "main": "lib/WebLinksAddon.js",
   "types": "typings/web-links.d.ts",
   "license": "MIT",
   "scripts": {
