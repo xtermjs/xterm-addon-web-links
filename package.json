@@ -1,0 +1,14 @@
+{
+  "name": "xterm-addon-web-links",
+  "main": "webLinksAddon.ts",
+  "scripts": {
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "typescript": "^3.2.2",
+    "xterm": "^3.10.0"
+  },
+  "peerDependencies": {
+    "xterm": "^3.10.0"
+  }
+}
