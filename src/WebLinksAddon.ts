@@ -7,7 +7,8 @@ import { Terminal, ILinkMatcherOptions } from 'xterm';
 
 // TODO: This is temporary, link to xterm when the new version is published
 export interface ITerminalAddon {
-    dispose(): void;
+  activate(terminal: Terminal): void;
+  dispose(): void;
 }
 
 const protocolClause = '(https?:\\/\\/)';
@@ -35,8 +36,10 @@ function handleLink(event: MouseEvent, uri: string): void {
 
 export class WebLinksAddon implements ITerminalAddon {
   private _linkMatcherId: number;
+  private _terminal: Terminal;
 
-  constructor(private _terminal: Terminal) {
+  public activate(terminal: Terminal): void {
+    this._terminal = terminal;
   }
 
   public init(handler: (event: MouseEvent, uri: string) => void = handleLink, options: ILinkMatcherOptions = {}): void {
