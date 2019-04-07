@@ -38,13 +38,16 @@ export class WebLinksAddon implements ITerminalAddon {
   private _linkMatcherId: number;
   private _terminal: Terminal;
 
-  public activate(terminal: Terminal): void {
-    this._terminal = terminal;
+  constructor(
+    private _handler: (event: MouseEvent, uri: string) => void = handleLink,
+    private _options: ILinkMatcherOptions = {}
+  ) {
+    this._options.matchIndex = 1;
   }
 
-  public init(handler: (event: MouseEvent, uri: string) => void = handleLink, options: ILinkMatcherOptions = {}): void {
-    options.matchIndex = 1;
-    this._linkMatcherId = this._terminal.registerLinkMatcher(strictUrlRegex, handler, options);
+  public activate(terminal: Terminal): void {
+    this._terminal = terminal;
+    this._linkMatcherId = this._terminal.registerLinkMatcher(strictUrlRegex, this._handler, this._options);
   }
 
   public dispose(): void {
