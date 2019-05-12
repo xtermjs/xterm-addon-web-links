@@ -39,6 +39,11 @@ describe('API Integration Tests', () => {
     await testHostName('foo.com');
   });
 
+  it('.com.au', async function(): Promise<any> {
+    this.timeout(20000);
+    await testHostName('foo.com.au');
+  });
+
   it('.io', async function(): Promise<any> {
     this.timeout(20000);
     await testHostName('foo.io');
