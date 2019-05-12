@@ -10,9 +10,13 @@
   "license": "MIT",
   "scripts": {
     "watch": "tsc -w",
-    "prepublish": "tsc"
+    "prepublish": "tsc",
+    "lint": "tslint -p .",
+    "test": "npm run lint"
   },
   "devDependencies": {
+    "tslint": "^5.16.0",
+    "tslint-consistent-codestyle": "^1.15.1",
     "typescript": "^3.2.2",
     "xterm": "^3.10.0"
   },
