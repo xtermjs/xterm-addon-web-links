@@ -20,5 +20,5 @@ jobs:
   - script: |
       yarn start &
       sleep 5
-      yarn test
+      yarn test --headless
     displayName: 'Tests'
