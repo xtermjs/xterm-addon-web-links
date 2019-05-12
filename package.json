@@ -11,8 +11,7 @@
   "scripts": {
     "watch": "tsc -w",
     "prepublish": "tsc",
-    "lint": "tslint -p .",
-    "test": "npm run lint"
+    "lint": "tslint -p ."
   },
   "devDependencies": {
     "tslint": "^5.16.0",
