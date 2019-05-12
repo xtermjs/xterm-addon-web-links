@@ -34,19 +34,35 @@ describe('API Integration Tests', () => {
     await page.goto(APP);
   });
 
-  it('Default options', async function(): Promise<any> {
-    this.timeout(10000);
-    await openTerminal({ rendererType: 'dom' });
-    await page.evaluate(`window.term.loadAddon(new window.WebLinksAddon())`);
-    await page.evaluate(`window.term.write('  http://foo.com  ')`);
-    await hoverCell(3, 1);
+  it('.com', async function(): Promise<any> {
+    this.timeout(20000);
+    await testHostName('foo.com');
+  });
 
-    // const match = row.match(term.regex);
-    // const uri = match[term.options.matchIndex];
-
-    // assert.equal(uri, 'http://foo.com');
+  it('.io', async function(): Promise<any> {
+    this.timeout(20000);
+    await testHostName('foo.io');
   });
 });
+
+async function testHostName(hostname: string): Promise<void> {
+  await openTerminal({ rendererType: 'dom' });
+  await page.evaluate(`window.term.loadAddon(new window.WebLinksAddon())`);
+  await page.evaluate(`window.term.writeln('  http://${hostname}  ')`);
+  assert.equal(await getLinkAtCell(3, 1), `http://${hostname}`);
+  await page.evaluate(`window.term.writeln('  http://${hostname}/a~b#c~d?e~f  ')`);
+  assert.equal(await getLinkAtCell(3, 2), `http://${hostname}/a~b#c~d?e~f`);
+  await page.evaluate(`window.term.writeln('  http://${hostname}/colon:test  ')`);
+  assert.equal(await getLinkAtCell(3, 3), `http://${hostname}/colon:test`);
+  await page.evaluate(`window.term.writeln('  http://${hostname}/colon:test:  ')`);
+  assert.equal(await getLinkAtCell(3, 4), `http://${hostname}/colon:test`);
+  await page.evaluate(`window.term.writeln('"http://${hostname}/"')`);
+  assert.equal(await getLinkAtCell(2, 5), `http://${hostname}/`);
+  await page.evaluate(`window.term.writeln('\\'http://${hostname}/\\'')`);
+  assert.equal(await getLinkAtCell(2, 6), `http://${hostname}/`);
+  await page.evaluate(`window.term.writeln('http://${hostname}/subpath/+/id')`);
+  assert.equal(await getLinkAtCell(1, 7), `http://${hostname}/subpath/+/id`);
+}
 
 async function openTerminal(options: ITerminalOptions = {}): Promise<void> {
   await page.evaluate(`window.term = new Terminal(${JSON.stringify(options)})`);
@@ -58,6 +74,10 @@ async function openTerminal(options: ITerminalOptions = {}): Promise<void> {
   }
 }
 
-async function hoverCell(col: number, row: number): Promise<void> {
-  await page.hover(`.xterm-rows > :nth-child(${col}) > :nth-child(${row})`);
+async function getLinkAtCell(col: number, row: number): Promise<string> {
+  const cellSelector = `.xterm-rows > :nth-child(${row}) > :nth-child(${col})`;
+  await page.waitForSelector(cellSelector);
+  await page.hover(cellSelector);
+  await page.waitForSelector(`.xterm-rows > :nth-child(${row}) > span[style]`);
+  return await page.evaluate(`Array.prototype.reduce.call(document.querySelectorAll('.xterm-rows > :nth-child(${row}) > span[style]'), (a, b) => a + b.textContent, '');`);
 }

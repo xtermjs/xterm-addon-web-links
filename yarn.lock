@@ -3804,10 +3804,10 @@ xtend@^4.0.0, xtend@~4.0.1:
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
   integrity sha1-pcbVMr5lbiPbgg77lDofBJmNY68=
 
-xterm@^3.10.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/xterm/-/xterm-3.10.0.tgz#2c3108d886b9cb4e2d7d4f1a05ce5be6758552de"
-  integrity sha512-ZA55MObCk8xKHG0TjZpStCJn6oIkPkW24ZtagZpUdol9kHYJ36imPsesZdVXsyxQd1le4RPpSpDU9O/rqq/yCA==
+xterm@3.14.0-beta11:
+  version "3.14.0-beta11"
+  resolved "https://registry.yarnpkg.com/xterm/-/xterm-3.14.0-beta11.tgz#7c7c618c9111838b14b81e1d0b9ef0ef9fecea3e"
+  integrity sha512-e2bqrXCWWQur35v4eFYGITPz6qFpKCDuJ+xAKtGN6EM/Fj6W14NdmVgqUpwD/5U6rGxmV5j3WHRX6U26M7VPFQ==
 
 "y18n@^3.2.1 || ^4.0.0", y18n@^4.0.0:
   version "4.0.0"

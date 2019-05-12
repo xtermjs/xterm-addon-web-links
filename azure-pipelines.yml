@@ -17,3 +17,8 @@ jobs:
   - script: |
       yarn lint
     displayName: 'Lint'
+  - script: |
+      yarn start &
+      sleep 5
+      yarn test
+    displayName: 'Tests'

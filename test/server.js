@@ -12,7 +12,7 @@ function startServer() {
   expressWs(app);
 
   app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
-  app.get('/xterm.css', (req, res) => res.sendFile(path.resolve(__dirname, '..', 'node_modules/xterm/dist/xterm.css')));
+  app.get('/xterm.css', (req, res) => res.sendFile(path.resolve(__dirname, '..', 'node_modules/xterm/lib/xterm.css')));
   app.get('/client-bundle.js', (req, res) => res.sendFile(__dirname + '/dist/client-bundle.js'));
 
   var port = process.env.PORT || 3000;
