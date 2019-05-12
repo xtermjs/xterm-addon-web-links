@@ -35,8 +35,8 @@ function handleLink(event: MouseEvent, uri: string): void {
 }
 
 export class WebLinksAddon implements ITerminalAddon {
-  private _linkMatcherId: number;
-  private _terminal: Terminal;
+  private _linkMatcherId: number | undefined;
+  private _terminal: Terminal | undefined;
 
   constructor(
     private _handler: (event: MouseEvent, uri: string) => void = handleLink,
@@ -51,6 +51,8 @@ export class WebLinksAddon implements ITerminalAddon {
   }
 
   public dispose(): void {
-    this._terminal.deregisterLinkMatcher(this._linkMatcherId);
+    if (this._linkMatcherId !== undefined && this._terminal !== undefined) {
+      this._terminal.deregisterLinkMatcher(this._linkMatcherId);
+    }
   }
 }
