@@ -16,7 +16,7 @@ const height = 600;
 
 describe('API Integration Tests', () => {
   before(async function(): Promise<any> {
-    this.timeout(20000);
+    this.timeout(10000);
     browser = await puppeteer.launch({
       headless: process.argv.indexOf('--headless') !== -1,
       slowMo: 80,
@@ -30,7 +30,8 @@ describe('API Integration Tests', () => {
     browser.close();
   });
 
-  beforeEach(async () => {
+  beforeEach(async function(): Promise<any> {
+    this.timeout(5000);
     await page.goto(APP);
   });
 
