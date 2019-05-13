@@ -8,7 +8,7 @@
       "es2015"
     ],
     "rootDir": ".",
-    "outDir": "./out",
+    "outDir": "./dist",
     "sourceMap": true,
     "removeComments": true,
     "strict": true
