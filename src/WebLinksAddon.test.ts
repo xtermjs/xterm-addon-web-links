@@ -54,19 +54,21 @@ describe('API Integration Tests', () => {
 async function testHostName(hostname: string): Promise<void> {
   await openTerminal({ rendererType: 'dom' });
   await page.evaluate(`window.term.loadAddon(new window.WebLinksAddon())`);
-  await page.evaluate(`window.term.writeln('  http://${hostname}  ')`);
+  await page.evaluate(`
+    window.term.writeln('  http://${hostname}  ');
+    window.term.writeln('  http://${hostname}/a~b#c~d?e~f  ');
+    window.term.writeln('  http://${hostname}/colon:test  ');
+    window.term.writeln('  http://${hostname}/colon:test:  ');
+    window.term.writeln('"http://${hostname}/"');
+    window.term.writeln('\\'http://${hostname}/\\'');
+    window.term.writeln('http://${hostname}/subpath/+/id');
+  `);
   assert.equal(await getLinkAtCell(3, 1), `http://${hostname}`);
-  await page.evaluate(`window.term.writeln('  http://${hostname}/a~b#c~d?e~f  ')`);
   assert.equal(await getLinkAtCell(3, 2), `http://${hostname}/a~b#c~d?e~f`);
-  await page.evaluate(`window.term.writeln('  http://${hostname}/colon:test  ')`);
   assert.equal(await getLinkAtCell(3, 3), `http://${hostname}/colon:test`);
-  await page.evaluate(`window.term.writeln('  http://${hostname}/colon:test:  ')`);
   assert.equal(await getLinkAtCell(3, 4), `http://${hostname}/colon:test`);
-  await page.evaluate(`window.term.writeln('"http://${hostname}/"')`);
   assert.equal(await getLinkAtCell(2, 5), `http://${hostname}/`);
-  await page.evaluate(`window.term.writeln('\\'http://${hostname}/\\'')`);
   assert.equal(await getLinkAtCell(2, 6), `http://${hostname}/`);
-  await page.evaluate(`window.term.writeln('http://${hostname}/subpath/+/id')`);
   assert.equal(await getLinkAtCell(1, 7), `http://${hostname}/subpath/+/id`);
 }
 
@@ -81,9 +83,7 @@ async function openTerminal(options: ITerminalOptions = {}): Promise<void> {
 }
 
 async function getLinkAtCell(col: number, row: number): Promise<string> {
-  const cellSelector = `.xterm-rows > :nth-child(${row}) > :nth-child(${col})`;
-  await page.waitForSelector(cellSelector);
-  await page.hover(cellSelector);
-  await page.waitForSelector(`.xterm-rows > :nth-child(${row}) > span[style]`);
-  return await page.evaluate(`Array.prototype.reduce.call(document.querySelectorAll('.xterm-rows > :nth-child(${row}) > span[style]'), (a, b) => a + b.textContent, '');`);
+  const rowSelector = `.xterm-rows > :nth-child(${row})`;
+  await page.hover(`${rowSelector} > :nth-child(${col})`);
+  return await page.evaluate(`Array.prototype.reduce.call(document.querySelectorAll('${rowSelector} > span[style]'), (a, b) => a + b.textContent, '');`);
 }
