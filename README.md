@@ -1,6 +1,6 @@
 ## xterm-addon-web-links
 
-[![Build Status](https://dev.azure.com/xtermjs/xterm-addon-web-links/_apis/build/status/xtermjs.xterm-addon-web-links?branchName=master)](https://dev.azure.com/xtermjs/xterm-addon-web-links/_build/latest?definitionId=5&branchName=master)
+⚠️ This addon has moved to the core [xtermjs/xterm.js](https://github.com/xtermjs/xterm.js) repo ⚠️
 
 An addon for [xterm.js](https://github.com/xtermjs/xterm.js) that enabled web links. This addon requires xterm.js 3.14+.
 
